@@ -19,13 +19,13 @@ module.exports = (function () {
      * @param  {object) config containing response url and message
      * @param  {object} message object message to be send
      */
-    var sendMessage = function (url, simpleBool, message, type, preText) {
+    var sendMessage = function (url, attachmentsBool, message, type, preText) {
         slack = new Slack(url);
 
         var attachments = [];
         var attachment = {};
         attachment.text = message.text;
-        attachment.pretext = message.pre_text;
+        attachment.pre_text = message.pre_text;
 
         switch (type) {
             case 'error':
@@ -52,12 +52,11 @@ module.exports = (function () {
             ]
         };
 
-        console.log(fullMessage);
-
-        if (simpleBool) {
-            slack.send(message);
-        } else {
+        if (attachmentsBool) {
             slack.send(fullMessage);
+        } else {
+            console.log(message);
+            slack.send(message);
         }
     };
 

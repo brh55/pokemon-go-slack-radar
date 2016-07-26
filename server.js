@@ -32,13 +32,11 @@ app.post('/', urlEncodeParser, function (req, res) {
         if (!input) {
             slackService.sendMessage(
                 request.url,
+                true,
                 {
                     channel: request.channel,
                     text: request.user + ', looks like you forgot to include an address.'
-                },
-                'error',
-                false,
-                'Oops'
+                }
             );
 
             res.sendStatus(200);
@@ -56,10 +54,17 @@ app.post('/', urlEncodeParser, function (req, res) {
                     };
 
                     pokeScan(coordinates, function(err, pokemonArray) {
-                        console.log('testing');
                         if (err) {
-                            res.send(400);
-                            throw err;
+                            slackService.sendMessage(
+                                request.url,
+                                false,
+                                {
+                                    channel: request.channel,
+                                    text: ':cry: Sorry, there is a issue with the Pokévision servers.',
+                                }
+                            );
+                            res.sendStatus(200);
+                            return;
                         }
 
                         var fields = [];
@@ -73,31 +78,31 @@ app.post('/', urlEncodeParser, function (req, res) {
                             var gmapUrl = 'https://www.google.com/maps/search/' + pokemon.latitude + '+' + pokemon.longitude;
 
                             var attachmentObj = {
-                                fallback: pokemon.name + ' is ' + pokemon.distance_str + ' away and despawns in ' + pokemon.despawn_in_str,
+                                fallback: pokemon.name + ' is ' + pokemon.distance_str + ' away and despawns in ' + pokemon.despawns_in_str,
                                 title: pokemon.name,
                                 thumb_url: mediaUrl,
                                 fields: []
                             };
 
                             attachmentObj.fields.push(slackService.buildField("Distance", pokemon.distance_str + " m", true));
-                            attachmentObj.fields.push(slackService.buildField("Despawns In", pokemon.despawn_in_str + " mins", true));
+                            attachmentObj.fields.push(slackService.buildField("Despawns In", pokemon.despawns_in_str + " mins", true));
                             attachmentObj.fields.push(slackService.buildField("View Map", gmapLink, false));
                             attachments.push(attachmentObj);
+
+                            console.log(attachments);
                         }
 
                         message.attachments = attachments;
 
-                        console.log(message);
-
                         slackService.sendMessage(
                             request.url,
-                            false,
+                            true,
                             {
                                 channel: request.channel,
                                 text: message,
                             },
                             'success',
-                            'Poke Scanned Successful'
+                            message.text
                         );
                     });
                 } else if (result.length > 0) {
@@ -114,7 +119,7 @@ app.post('/', urlEncodeParser, function (req, res) {
                     }
                     slackService.sendMessage(
                         request.url,
-                        false,
+                        true,
                         {
                             channel: request.channel,
                             text: message,
@@ -122,7 +127,8 @@ app.post('/', urlEncodeParser, function (req, res) {
                         'error',
                         preText
                     );
-        
+
+                    res.sendStatus(200);
                 } else {
                     // Nothing was found
                     var message = 'The address entered was not found';
