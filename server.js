@@ -28,6 +28,7 @@ app.post('/', urlEncodeParser, function (req, res) {
 
         // If the address field is empty, inform user
         if (!req.body.text) {
+            console.log("HII");
             slackService.sendMessage(request.url, {
                 channel: request.channel,
                 text: request.user + ", looks like you forgot to include an address."

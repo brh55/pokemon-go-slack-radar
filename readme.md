@@ -12,3 +12,7 @@ This boilerplate features:
 - [nodeunit](https://github.com/caolan/nodeunit) for simple, easy unit testing
 - Pre-configured [Heroku quick deploy badge](https://devcenter.heroku.com/articles/heroku-button) *(app.json)*
 - Starter README template
+
+
+# Google API Key Registration
+https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&keyType=CLIENT_SIDE&reusekey=true

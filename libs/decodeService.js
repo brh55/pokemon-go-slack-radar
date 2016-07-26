@@ -1,10 +1,11 @@
 // Decode Service
 
 var configs = require('../config');
-var geocoder = NodeGeocoder(config.bot);
+var NodeGeocoder = require('node-geocoder');
+var geocoder = NodeGeocoder(configs.bot);
 
 // Adapter for Geocoder
-module.export = {
+module.exports = {
     getAddress: function (addressString) {
         return geocoder.geocode(addressString);
     }
