@@ -2,7 +2,7 @@
   "name": "node-slack-seed",
   "version": "0.1.0",
   "description": "A template/boilerplate for starting a node based Slack bot",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "nodeunit tests",
     "start": "node server.js"
@@ -20,8 +20,10 @@
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "node-cache": "^3.0.0",
+    "node-geocoder": "^3.13.1",
     "node-slack": "0.0.7",
     "nodeunit": "^0.9.1",
+    "pokego-scan": "^0.1.5",
     "utils": "^0.3.1"
   }
 }
