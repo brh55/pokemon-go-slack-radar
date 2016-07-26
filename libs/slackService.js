@@ -19,9 +19,54 @@ module.exports = (function () {
      * @param  {object) config containing response url and message
      * @param  {object} message object message to be send
      */
-    var sendMessage = function (url, message) {
+    var sendMessage = function (url, simpleBool, message, type, preText) {
         slack = new Slack(url);
-        slack.send(message);
+
+        var attachments = [];
+        var attachment = {};
+        attachment.text = message.text;
+        attachment.pretext = message.pre_text;
+
+        switch (type) {
+            case 'error':
+                attachment.color = '#e74c3c';
+                break;
+
+            case 'warning':
+                attachment.color = '#f39c12';
+                break;
+
+            case 'success':
+                attachment.color = '#2ecc71';
+                break;
+
+            default:
+                attachment.color = '#bdc3c7';
+                break;
+        };
+
+        var fullMessage = {
+            text: preText,
+            attachments: [
+                attachment
+            ]
+        };
+
+        console.log(fullMessage);
+
+        if (simpleBool) {
+            slack.send(message);
+        } else {
+            slack.send(fullMessage);
+        }
+    };
+
+    var buildField = function(title, value, shortBool) {
+        return {
+            title: title,
+            value: value,
+            short: shortBool
+        }
     };
 
     /**
@@ -44,6 +89,7 @@ module.exports = (function () {
 
     return {
         sendMessage: sendMessage,
-        parseHook: parseHook
+        parseHook: parseHook,
+        buildField: buildField,
     };
 })();
