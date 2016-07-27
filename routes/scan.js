@@ -18,7 +18,6 @@ var urlEncodeParser = bodyParser.urlencoded({extended: true});
 var pokeScan = Promise.promisify(require('pokego-scan'));
 var router = express.Router();
 
-
 router.post('/scan', urlEncodeParser, function (req, res) {
     // if request doesn't contain body, respond with 400 error.
     if (!req.body) res.sendStatus(400);
@@ -101,7 +100,7 @@ router.post('/scan', urlEncodeParser, function (req, res) {
                     });
                 } else if (result.length > 0) {
                     // More than one address found
-                    message.text = 'Which ' + input + ' did you mean?'
+                    message.text = 'There were multiple addresses found for \'' + input + '\' try entering one of these:'
                     message.attachments = [];
                     var attachmentObj = {};
 
