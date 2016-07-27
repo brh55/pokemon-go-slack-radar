@@ -1,5 +1,5 @@
 var utilTest = require('nodeunit').testCase;
-var util = require('../libs/util');
+var util = require('../libs/customUtil');
 
 var undefMockObj = {
     testProp1: undefined,
@@ -25,13 +25,6 @@ module.exports = utilTest({
 
         test.equal(expectFalse, false);
         test.equal(expectTrue, true);
-        test.done();
-    },
-    formatDate: function (test) {
-        var mockDate = '2015-08-26T02:59:44.988Z';
-        var formattedDate = util.formatDate(mockDate);
-
-        test.equal(formattedDate, '2015-08-26 8:59 AM UTC');
         test.done();
     },
     getUndefinedKeys: function (test) {

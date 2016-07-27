@@ -4,32 +4,6 @@ var nodeUtil = require('util');
 
 module.exports = (function () {
     /**
-     * Format date of ISO Date
-     *
-     * @param  {string} ISODate ISODate format
-     * @return {string}         returns in format of: MonthDate, Hour:Mins PM / AM
-     */
-    var formatDate = function (ISODate) {
-        var tempDate = ISODate.replace(/T/, ' ').replace(/\..+/, '');
-        var dateSplit = tempDate.split(' ');
-
-        var monthDate = dateSplit[0];
-        var time = dateSplit[1];
-        var timeSplit = time.split(':');
-
-        var hour = timeSplit[0];
-        var mins = timeSplit[1];
-
-        // Format into 12 hour format
-        var hours = ((hour + 11) % 12 + 1);
-        var suffix = (hours >= 12) ? 'PM' : 'AM';
-
-        var formattedDate = monthDate + ' ' + hours + ':' + mins + ' ' + suffix + ' UTC';
-
-        return formattedDate;
-    };
-
-    /**
      * Checks if all keys do not have undefined values string values
      *
      * @param  {object} object object in question
@@ -62,7 +36,6 @@ module.exports = (function () {
     };
 
     return {
-        formatDate: formatDate,
         allDefined: allDefined,
         getUndefinedKeys: getUndefinedKeys
     };
