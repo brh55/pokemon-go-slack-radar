@@ -12,7 +12,8 @@ var util = require('./libs/util');
 var slackService = require('./libs/slackService');
 var decodeService = require('./libs/decodeService');
 // var pokeService = require('./libs/pokeService');
-var pokeScan = require('pokego-scan');
+var Promise = require("bluebird");
+var pokeScan = Promise.promisify(require('pokego-scan'));
 
 var debugRoute = require('./routes/debug');
 
@@ -32,7 +33,6 @@ app.post('/', urlEncodeParser, function (req, res) {
         if (!input) {
             slackService.sendMessage(
                 request.url,
-                true,
                 {
                     channel: request.channel,
                     text: request.user + ', looks like you forgot to include an address.'
@@ -53,25 +53,12 @@ app.post('/', urlEncodeParser, function (req, res) {
                         longitude: result[0].longitude
                     };
 
-                    pokeScan(coordinates, function(err, pokemonArray) {
-                        if (err) {
-                            slackService.sendMessage(
-                                request.url,
-                                false,
-                                {
-                                    channel: request.channel,
-                                    text: ':cry: Sorry, there is a issue with the Pokévision servers.',
-                                }
-                            );
-                            res.sendStatus(200);
-                            return;
-                        }
-
+                    pokeScan(coordinates).then(function(pokemonArray) {
+                        console.log(pokemonArray.length > 1);
                         var fields = [];
                         var attachments = [];
                         var message = {};
                         message.text = 'Scanned ' + correctAddress;
-
                         for (var i = 0; i < pokemonArray.length; i++) {
                             var pokemon = pokemonArray[i];
                             var mediaUrl = 'http://pokeapi.co/media/img/' + pokemonArray[i].pokemonId + '.png';
@@ -80,36 +67,44 @@ app.post('/', urlEncodeParser, function (req, res) {
                             var attachmentObj = {
                                 fallback: pokemon.name + ' is ' + pokemon.distance_str + ' away and despawns in ' + pokemon.despawns_in_str,
                                 title: pokemon.name,
+                                title_link: gmapUrl,
                                 thumb_url: mediaUrl,
-                                fields: []
+                                fields: [],
+                                color:'#fbd478'
                             };
 
-                            attachmentObj.fields.push(slackService.buildField("Distance", pokemon.distance_str + " m", true));
+                            attachmentObj.fields.push(slackService.buildField("Distance", pokemon.distance_str, true));
                             attachmentObj.fields.push(slackService.buildField("Despawns In", pokemon.despawns_in_str + " mins", true));
-                            attachmentObj.fields.push(slackService.buildField("View Map", gmapLink, false));
                             attachments.push(attachmentObj);
-
-                            console.log(attachments);
                         }
 
                         message.attachments = attachments;
 
+
                         slackService.sendMessage(
                             request.url,
-                            true,
+                            message
+                        );
+
+                        res.sendStatus(200);
+                    })
+                    .catch(function(err) {
+                        slackService.sendMessage(
+                            request.url,
                             {
                                 channel: request.channel,
-                                text: message,
-                            },
-                            'success',
-                            message.text
+                                text: ':cry: Sorry, there is a issue with the Pokévision servers.',
+                            }
                         );
+                        res.sendStatus(200);
+                        return;
                     });
                 } else if (result.length > 0) {
                     // More than one address found
                     var preText = 'Which ' + input + ' did you mean?'
 
-                    // Add button later
+                    // @TODO - Figure out interactivity with buttons
+                    // to respond with
                     for (var i = 0; i < result.length; i++) {
                         var address = result[i].formattedAddress;
                         var numSelection = i + 1;
@@ -119,22 +114,23 @@ app.post('/', urlEncodeParser, function (req, res) {
                     }
                     slackService.sendMessage(
                         request.url,
-                        true,
                         {
                             channel: request.channel,
                             text: message,
-                        },
-                        'error',
-                        preText
+                        }
                     );
 
                     res.sendStatus(200);
                 } else {
                     // Nothing was found
-                    var message = 'The address entered was not found';
+                    slackService.sendMessage(
+                        request.url,
+                        {
+                            channel: request.channel,
+                            text: 'The address entered was not found',
+                        }
+                    );
                 }
-
-                console.log(result);
             });
 
         }
@@ -144,5 +140,5 @@ app.post('/', urlEncodeParser, function (req, res) {
 app.use('/debug', debugRoute);
 
 app.listen(port, function () {
-    console.log('Slack Contentful is listening on PORT:', port);
+    console.log('Pokemon Scanner is listening on PORT:', port);
 });
