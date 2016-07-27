@@ -26,7 +26,7 @@ Visit the [Google Developers Portal](https://console.developers.google.com/flows
 
 
 ##### Slack
-Visit the [Slack Token Page](https://www.google.com/#q=slack+token) for more information on how to generate your organizations token.
+Visit the [Slack Token Page](https://www.google.com/#q=slack+token) for more information regarding how to generate your organizations token.
 
 
 ### Setting Up Slack
@@ -37,14 +37,12 @@ Setting up the command to POST a request to the `pokemon-go-slack-scanner`.
 ### Configuration & Deployment
 
 ##### Heroku Quick Deploy
-If you would like to use Heroku as a service provider, feel free to use the quick deploy button.
+If you would like to use [Heroku](https://www.heroku.com/) as a service provider, feel free to use the quick deploy button to ease the set up process.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 #### Manual Configuration
-
 The configuration of the bot are set with environment variables using an `.env` file. Please look at the `example.env` file of possible configurations, and create an updated `.env` file before you deploy.
-
 
 _.env_
 
@@ -77,7 +75,6 @@ SLACK_TOKEN = jsadj2019a099wPxkkl
   ```
 
 ### Post-Deployment - Test & Debugging
-
 After your app has deployed, go to your server url and go to the `/check` endpoint. To verify if your setting are correct.
 
 Example:
