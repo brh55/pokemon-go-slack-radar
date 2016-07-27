@@ -19,44 +19,13 @@ module.exports = (function () {
      * @param  {object) config containing response url and message
      * @param  {object} message object message to be send
      */
-    var sendMessage = function (url, attachmentsBool, message, type, preText) {
+    var sendMessage = function (url, message) {
         slack = new Slack(url);
 
-        var attachments = [];
-        var attachment = {};
-        attachment.text = message.text;
-        attachment.pre_text = message.pre_text;
-
-        switch (type) {
-            case 'error':
-                attachment.color = '#e74c3c';
-                break;
-
-            case 'warning':
-                attachment.color = '#f39c12';
-                break;
-
-            case 'success':
-                attachment.color = '#2ecc71';
-                break;
-
-            default:
-                attachment.color = '#bdc3c7';
-                break;
-        };
-
-        var fullMessage = {
-            text: preText,
-            attachments: [
-                attachment
-            ]
-        };
-
-        if (attachmentsBool) {
-            slack.send(fullMessage);
-        } else {
-            console.log(message);
+        if (message) {
             slack.send(message);
+        } else {
+            console.log("~~~Message has not been properly created~~~~");
         }
     };
 
