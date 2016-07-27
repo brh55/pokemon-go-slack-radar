@@ -1,7 +1,7 @@
 {
-  "name": "node-slack-seed",
+  "name": "pokemon-go-slack-scanner",
   "version": "0.1.0",
-  "description": "A template/boilerplate for starting a node based Slack bot",
+  "description": "A slack custom slash command to scan an addresses for nearby pokemon.",
   "main": "server.js",
   "scripts": {
     "test": "nodeunit tests",
@@ -9,9 +9,10 @@
   },
   "keywords": [
     "slack",
-    "template",
     "node",
-    "boilerplate"
+    "pokemon go",
+    "productivity",
+    "fun"
   ],
   "author": "Brandon Him",
   "license": "MIT",
