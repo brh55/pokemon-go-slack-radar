@@ -7,12 +7,6 @@ var nodeUtil = require('util');
 module.exports = (function () {
     var slack;
 
-    if (nodeUtil.isUndefined(config.webhook)) {
-        console.log('Please ensure webhook is properly set up');
-    } else {
-        slack = new Slack(config.webhook);
-    }
-
     /**
      * Slack Wrapper to send Slack message
      *
@@ -20,7 +14,11 @@ module.exports = (function () {
      * @param  {object} message object message to be send
      */
     var sendMessage = function (url, message) {
-        slack = new Slack(url);
+        if (!url) {
+            console.log('~~Message cannot be sent, no response url provided');
+        } else {
+            slack = new Slack(url);
+        }
 
         if (message) {
             slack.send(message);
@@ -29,11 +27,20 @@ module.exports = (function () {
         }
     };
 
+    /**
+     * Builds a field within an attachment
+     * @param  {string} title     title of field
+     * @param  {string} value     value of field
+     * @param  {string} shortBool boolean of short field, defaults false
+     * @return {object}           field object
+     */
     var buildField = function(title, value, shortBool) {
+        var short = shortBool || false;
+
         return {
             title: title,
             value: value,
-            short: shortBool
+            short: short
         }
     };
 
