@@ -12,14 +12,15 @@ The configuration of the bot are set with environment variables using an `.env` 
 
 _.env_
 
+```
+PORT = 5000
 
-    PORT = 5000
-    #HEX Color of update notification
-    UPDATE_COLOR = "#27ae60"
+# HEX Color of update notification
+UPDATE_COLOR = "#27ae60"
 
-    #IMPORTANT TO DECODE ADDRESS
-    GOOGLE_API_KEY = ASADAaisai1928axzstuz
-    SLACK_TOKEN = jsadj2019a099wPxkkl
+GOOGLE_API_TOKEN = ASADAaisai1928axzstuz
+SLACK_TOKEN = jsadj2019a099wPxkkl
+```
 
 ## Setting Up Slack Slash Command
 Set up the command to POST a request to your web server url
