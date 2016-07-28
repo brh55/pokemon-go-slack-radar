@@ -11,7 +11,7 @@ var scanRoute = require('./routes/scan');
 var homeRoute = require('./routes/home');
 
 app.use('/', homeRoute);
-app.use('/scan', scanRoute);
+app.post('/scan', scanRoute);
 app.use('/debug', debugRoute);
 
 app.listen(port, function () {

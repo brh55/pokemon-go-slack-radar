@@ -1,5 +1,5 @@
 {
-  "name": "pokemon-go-slack-scanner",
+  "name": "pokemon-go-slack-radar",
   "description": "A slack custom slash command to scan an addresses for nearby pokemon",
   "keywords": [
     "pokemon go",

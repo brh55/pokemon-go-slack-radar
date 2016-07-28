@@ -21,6 +21,7 @@ module.exports = (function () {
         }
 
         if (message) {
+            message.response_type = "in_channel";
             slack.send(message);
         } else {
             console.log("~~~Message has not been properly created~~~~");

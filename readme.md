@@ -1,22 +1,28 @@
-# Pokemon-Go-Slack-Scanner
-![Poke Go Logo](http://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/092015/pokemongo.png?itok=LERVo0L9)
+# Pokemon-Go-Slack-Radar
+![Poke Radar](http://cdn.bulbagarden.net/upload/thumb/a/a7/Poke_Radar.png/200px-Poke_Radar.png)
 
-![Repo Version](https://img.shields.io/github/tag/brh55/pokemon-go-slack-scanner.svg?style=flat-square&label=version)
-[![Build Status](https://travis-ci.org/brh55/pokemon-go-slack-scanner.svg?branch=master)](https://travis-ci.org/brh55/pokemon-go-slack-scanner) [![Dependency Status](https://david-dm.org/brh55/pokemon-go-slack-scanner.svg)](https://david-dm.org/brh55/pokemon-go-slack-scanner)
+![Repo Version](https://img.shields.io/github/tag/brh55/pokemon-go-slack-radar.svg?style=flat-square&label=version)
+[![Build Status](https://travis-ci.org/brh55/pokemon-go-slack-radar.svg?branch=master)](https://travis-ci.org/brh55/pokemon-go-slack-radar) [![Dependency Status](https://david-dm.org/brh55/pokemon-go-slack-radar.svg)](https://david-dm.org/brh55/pokemon-go-slack-radar)
 
-`pokemon-go-slack-scanner` is a simple slash command that allows you to scan for nearby pokemon based on a selected address. It's powered and __dependent__ of [Pokemon Vision](http://pokemonvision.com), a free Pokemon scanning tool, thus `pokemon-go-slack-scanner` may not function properly without warning.
+`pokemon-go-slack-radar` is a simple slash command that allows you to scan for nearby pokemon based on a selected address every X seconds for X minutes. It's powered and __dependent__ of [Pokemon Vision](http://pokemonvision.com), a free Pokemon scanning tool, thus `pokemon-go-slack-radar` may not function properly without warning.
 
     Caveats:
        - Google Geocoder API has a 1000 request daily limit, and 150k request limit after a card is registered.
        - The Geocoder service can take a wide range of addresses, but YMMV based on the accuracy of your inputs
 
 ## Getting started
-Setting up `pokemon-go-slack-scanner` requires 4 main steps:
+Setting up `pokemon-go-slack-radar` requires 4 main steps:
    
-   1. Retrieving Necessary Tokens (Slack and Google API _(or alternative decoding service)_)
-   2. Setting up Slack Custom Hooks
-   3. Configuring `pokemon-go-slack-scanner` and Deploying
+   1. Setting up Slack Custom Slash Commands
+   2. Retrieving Necessary Tokens (Slack and Google Geocoder API _(or alternative decoding service)_)
+   3. Configuring `pokemon-go-slack-radar` and Deploying
    4. Scan the sh!4z out of areas
+
+
+### Setting Up Slack
+Setting up the command to POST a request to the `pokemon-go-slack-radar`.
+
+```http://yourpokemonscannerurl.com/```
 
 ### Tokens
 This Slack bot requires 2 tokens: Google Geocoder API, and Slack. (__alternatively, a different decoder can be used, but has not been tested__)
@@ -24,15 +30,8 @@ This Slack bot requires 2 tokens: Google Geocoder API, and Slack. (__alternative
 ##### Google Geocoder API
 Visit the [Google Developers Portal](https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&keyType=CLIENT_SIDE&reusekey=true) on how to generate a token.
 
-
 ##### Slack
 Visit the [Slack Token Page](https://www.google.com/#q=slack+token) for more information regarding how to generate your organizations token.
-
-
-### Setting Up Slack
-Setting up the command to POST a request to the `pokemon-go-slack-scanner`.
-
-```http://yourpokemonscannerurl.com/```
 
 ### Configuration & Deployment
 
@@ -85,6 +84,15 @@ http://myherokuapp.heroku.com/debug
 If you've successfully deployed, you should get a successful message stating *Successful Set-up* along with a table of configurations to verify against.
 
 If set up was unsuccessful, you should get a message to verify your configurations, along with important configurations that the server has set up.
+
+### Usage
+Use the custom hook that was set up to initiate prompt:
+
+```
+/pokeradar scan [address] every [interval time] seconds for [duration]
+```
+
+_Example_
 
 ## License
 This repository is protected under the MIT License.
