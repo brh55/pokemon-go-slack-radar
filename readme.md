@@ -1,6 +1,7 @@
 # Pokemon-Go-Slack-Radar
 ![Repo Version](https://img.shields.io/github/tag/brh55/pokemon-go-slack-radar.svg?style=flat-square&label=version)
-[![Build Status](https://travis-ci.org/brh55/pokemon-go-slack-radar.svg?branch=master)](https://travis-ci.org/brh55/pokemon-go-slack-radar) [![Dependency Status](https://david-dm.org/brh55/pokemon-go-slack-radar.svg)](https://david-dm.org/brh55/pokemon-go-slack-radar)
+[![Build Status](https://travis-ci.org/brh55/pokemon-go-slack-radar.svg?branch=master)](https://travis-ci.org/brh55/pokemon-go-slack-radar)
+[![Dependency Status](https://david-dm.org/brh55/pokemon-go-slack-radar.svg)](https://david-dm.org/brh55/pokemon-go-slack-radar)
 
 ![Poke Radar](http://cdn.bulbagarden.net/upload/thumb/a/a7/Poke_Radar.png/200px-Poke_Radar.png)
 
@@ -26,7 +27,7 @@ Setting up `pokemon-go-slack-radar` requires 4 main steps:
 ### Setting Up Slack
 Setting up the command to POST a request to the `pokemon-go-slack-radar`.
 
-!(Slack Setup)[https://cloud.githubusercontent.com/assets/6020066/17226408/397b5172-54be-11e6-9d28-6829daa42798.png]
+![Slack Setup](https://cloud.githubusercontent.com/assets/6020066/17226408/397b5172-54be-11e6-9d28-6829daa42798.png)
 
 ### Tokens
 This Slack bot requires 2 tokens: Google Geocoder API, and Slack. (__alternatively, a different decoder can be used, but has not been tested__)
@@ -97,6 +98,7 @@ Use the custom hook that was set up to initiate prompt:
 ```
 
 __Example Usage__
+
 Will scan chinatown repeatingly for 5 minutes
 ![chinatown example](https://cloud.githubusercontent.com/assets/6020066/17226333/d5376aac-54bd-11e6-9de5-cc433f7ee1a0.png)
 
