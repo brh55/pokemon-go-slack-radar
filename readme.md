@@ -5,6 +5,8 @@
 
 ![Poke Radar](http://cdn.bulbagarden.net/upload/thumb/a/a7/Poke_Radar.png/200px-Poke_Radar.png)
 
+**THIS PROJECT NO LONGER WORKS, ITS BEEN FUN -- GG**
+
 `pokemon-go-slack-radar` is a simple slash command that allows you to scan for nearby pokemon based on a selected address every X seconds for X minutes. It's powered and __dependent__ of [Pokemon Vision](http://pokemonvision.com), a free Pokemon scanning tool, thus `pokemon-go-slack-radar` may not function properly without warning.
 
     Caveats:
