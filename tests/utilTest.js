@@ -1,5 +1,5 @@
 var utilTest = require('nodeunit').testCase;
-var util = require('../libs/customUtil');
+var util = require('../libs/customUtils');
 
 var undefMockObj = {
     testProp1: undefined,
