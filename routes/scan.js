@@ -8,7 +8,7 @@ var Promise = require('bluebird');
 var bodyParser = require('body-parser');
 var config = require('../config');
 var slackService = require('../libs/slackService');
-var decodeService = require('../libs/decodeService');
+var geoService = require('../libs/geoService');
 var S = require('string');
 
 // Var Declarations
@@ -16,8 +16,8 @@ var token = config.bot.slackToken;
 
 // Commonly used Middleware to parse URL Encoded request
 var urlEncodeParser = bodyParser.urlencoded({extended: true});
-var pokeScan = Promise.promisify(require('pokego-scan'));
-var pokeScan = Promise.promisify(require('pokego-scan'));
+var pokeService = require('../libs/pokeService');
+var getPokemon = Promise.promisify(pokeService.getPokemon);
 
 var router = express.Router();
 
@@ -51,16 +51,13 @@ router.post('/scan', urlEncodeParser, function (req, res) {
             var address = input.substring(5, addressEndIndex).s;
 
             // Decode and Send Pokemon Information
-            decodeService.getAddress(address, function (err, result) {
+            geoService.getAddress(address, function (err, result) {
                 if (err) res.sendStatus(400);
 
                 // Address is correct
                 if (result.length === 1) {
                     var correctAddress = result[0].formattedAddress;
-                    var coordinates = {
-                        latitude: result[0].latitude,
-                        longitude: result[0].longitude
-                    };
+                    var coordinates = geoService.getBounds(result[0].latitude, result[0].longitude);
 
                     // Check for Interval Timer Set
                     if (input.contains(intervalKeyword)) {
@@ -99,7 +96,7 @@ router.post('/scan', urlEncodeParser, function (req, res) {
                         }
                     } else {
                         // No interval timer set, send a once
-                        scanAndSendCallback(coordinates,request.url, message, req, res, correctAddress);
+                        scanAndSendCallback(coordinates, request.url, message, req, res, correctAddress);
                     }
 
                 } else if (result.length > 0) {
@@ -135,7 +132,8 @@ router.post('/scan', urlEncodeParser, function (req, res) {
 
 /** @TODO - Abstract nested actions */
 var scanAndSendCallback = function (coordinates, url, message, req, res, address) {
-    pokeScan(coordinates).then(function(pokemonArray) {
+    getPokemon(coordinates).then(function(pokemonArray) {
+        console.log(pokemonArray);
         var fields = [];
         var attachments = [];
 

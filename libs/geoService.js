@@ -17,7 +17,7 @@ Math.toDegrees = function(radians) {
 var GeoService = (function () {
     var getAddress = function (addressString, callback) {
         geocoder.geocode(addressString, callback);
-    },
+    };
     var getBounds = function (lat, long) {
         var earthRadius = 6371;
         var radius = .42; // Within 5 minute of walking distance of the center of city
@@ -27,7 +27,8 @@ var GeoService = (function () {
         var y2 = lat - Math.toDegrees(radius/earthRadius);
 
         return [y1, x1, y2, x2];
-    }
+    };
+
     return {
         getAddress: getAddress,
         getBounds: getBounds
