@@ -1,14 +1,21 @@
 # Pokemon-Go-Slack-Radar
+![Repo Version](https://img.shields.io/github/tag/brh55/pokemon-go-slack-radar.svg?style=flat-square&label=version)
+[![Build Status](https://travis-ci.org/brh55/pokemon-go-slack-radar.svg?branch=master)](https://travis-ci.org/brh55/pokemon-go-slack-radar)
+[![Dependency Status](https://david-dm.org/brh55/pokemon-go-slack-radar.svg)](https://david-dm.org/brh55/pokemon-go-slack-radar)
+
 ![Poke Radar](http://cdn.bulbagarden.net/upload/thumb/a/a7/Poke_Radar.png/200px-Poke_Radar.png)
 
-![Repo Version](https://img.shields.io/github/tag/brh55/pokemon-go-slack-radar.svg?style=flat-square&label=version)
-[![Build Status](https://travis-ci.org/brh55/pokemon-go-slack-radar.svg?branch=master)](https://travis-ci.org/brh55/pokemon-go-slack-radar) [![Dependency Status](https://david-dm.org/brh55/pokemon-go-slack-radar.svg)](https://david-dm.org/brh55/pokemon-go-slack-radar)
+**THIS PROJECT NO LONGER WORKS, ITS BEEN FUN -- GG**
 
 `pokemon-go-slack-radar` is a simple slash command that allows you to scan for nearby pokemon based on a selected address every X seconds for X minutes. It's powered and __dependent__ of [Pokemon Vision](http://pokemonvision.com), a free Pokemon scanning tool, thus `pokemon-go-slack-radar` may not function properly without warning.
 
     Caveats:
        - Google Geocoder API has a 1000 request daily limit, and 150k request limit after a card is registered.
        - The Geocoder service can take a wide range of addresses, but YMMV based on the accuracy of your inputs
+    Disclaimer:
+       - Still apparent bugs for interval scans
+
+![temporary image](https://cloud.githubusercontent.com/assets/6020066/17226559/f39044e6-54be-11e6-9206-f6d81008a50b.png)
 
 ## Getting started
 Setting up `pokemon-go-slack-radar` requires 4 main steps:
@@ -22,7 +29,7 @@ Setting up `pokemon-go-slack-radar` requires 4 main steps:
 ### Setting Up Slack
 Setting up the command to POST a request to the `pokemon-go-slack-radar`.
 
-```http://yourpokemonscannerurl.com/```
+![Slack Setup](https://cloud.githubusercontent.com/assets/6020066/17226408/397b5172-54be-11e6-9d28-6829daa42798.png)
 
 ### Tokens
 This Slack bot requires 2 tokens: Google Geocoder API, and Slack. (__alternatively, a different decoder can be used, but has not been tested__)
@@ -89,10 +96,16 @@ If set up was unsuccessful, you should get a message to verify your configuratio
 Use the custom hook that was set up to initiate prompt:
 
 ```
-/pokeradar scan [address] every [interval time] seconds for [duration]
+/pokeradar scan [address] every [interval time] seconds for [duration] minutes
 ```
 
-_Example_
+__Example Usage__
+
+Will scan chinatown repeatingly for 5 minutes
+![chinatown example](https://cloud.githubusercontent.com/assets/6020066/17226333/d5376aac-54bd-11e6-9de5-cc433f7ee1a0.png)
+
+Will scan berlin once
+![berlin example](https://cloud.githubusercontent.com/assets/6020066/17226391/1beeebf0-54be-11e6-8831-fd3a15cc1a91.png)
 
 ## License
 This repository is protected under the MIT License.
